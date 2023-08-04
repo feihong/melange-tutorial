@@ -1,6 +1,6 @@
 module App = {
   [@react.component]
-  let make = () => <Counter />;
+  let make = () => <div> <Counter /> <CounterFloat /> <TemperatureConverter /> <GuessingGame /> </div>;
 };
 
 let node = ReactDOM.querySelector("#root");

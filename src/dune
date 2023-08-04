@@ -4,5 +4,5 @@
  (libraries reason-react)
  (modules :standard)
  (preprocess
-  (pps reactjs-jsx-ppx))
+  (pps reactjs-jsx-ppx melange.ppx))
  (module_systems es6))
