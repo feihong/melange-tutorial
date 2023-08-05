@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "bundle": "webpack --mode production --entry ./_build/default/src/output/src/ReactApp.js",
+    "bundle": "webpack --mode production --entry ./_build/default/src/output/src/Index.js",
     "serve": "webpack serve --open --mode development --entry ./_build/default/src/output/src/Index.js"
   },
   "dependencies": {
