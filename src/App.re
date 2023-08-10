@@ -97,7 +97,7 @@ let make = () => {
          <Subtitle label="Bidirectional converter" />
          <TemperatureConverter />
        </div>
-     | GuessYourNumber => <div> <Title label="Guess your number" /> </div>
+     | GuessYourNumber => <div> <Title label="Guess your number" /> <GuessYourNumber /> </div>
      | GuessComputerNumber => <div> <Title label="Guess the computer's number" /> <GuessComputerNumber /> </div>
      | NotFound => <Title label="Not found!" />
      }}
