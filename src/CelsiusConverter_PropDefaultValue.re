@@ -1,10 +1,8 @@
-let initFahrenheit = {js|? °F|js};
-
 let getFahrenheit = value =>
-  switch (Js.Float.fromString(value)) {
-  | celsius when Js.Float.isNaN(celsius) => "error"
-  | _celsius when value == "" => {js|? °F|js}
-  | celsius =>
+  switch (float_of_string_opt(value)) {
+  | None when value == "" => {js|? °F|js}
+  | None => "error"
+  | Some(celsius) =>
     let fahrenheit = 9.0 /. 5.0 *. celsius +. 32.0;
     string_of_float(fahrenheit) ++ {js| °F|js};
   };

@@ -3,28 +3,49 @@ module Route = {
     | Home
     | NotFound
     | Counter
+    | Playground
+    | CelsiusConverter1
+    | CelsiusConverter2
     | TemperatureConverter
     | GuessYourNumber
     | GuessComputerNumber;
 
-  let pathToRoute = path =>
+  let fromPath = path =>
     switch (path) {
     | [] => Home
     | ["counter"] => Counter
+    | ["playground"] => Playground
+    | ["celsius-1"] => CelsiusConverter1
+    | ["celsius-2"] => CelsiusConverter2
     | ["temp-converter"] => TemperatureConverter
     | ["guess-your-number"] => GuessYourNumber
     | ["guess-computer-number"] => GuessComputerNumber
     | _ => NotFound
     };
 
-  let routeToPath =
+  let toPath =
     fun
     | Home => ""
     | NotFound => "not-found"
     | Counter => "counter"
+    | Playground => "playground"
+    | CelsiusConverter1 => "celsius-1"
+    | CelsiusConverter2 => "celsius-2"
     | TemperatureConverter => "temp-converter"
     | GuessYourNumber => "guess-your-number"
     | GuessComputerNumber => "guess-computer-number";
+
+  let toTitle =
+    fun
+    | Home => "Melange Tutorial"
+    | NotFound => "Not found"
+    | Counter => "Counter"
+    | Playground => "Playground"
+    | CelsiusConverter1 => "Celsius Converter, pt 1"
+    | CelsiusConverter2 => "Celsius Converter, pt 2"
+    | TemperatureConverter => "Temperature Converter"
+    | GuessYourNumber => "Guess Your Number"
+    | GuessComputerNumber => "Guess Computer's Number";
 };
 
 module Title = {
@@ -44,19 +65,9 @@ module Link = {
       href=""
       onClick={evt => {
         ReactEvent.Mouse.preventDefault(evt);
-        route |> Route.routeToPath |> ReasonReactRouter.push;
+        route |> Route.toPath |> ReasonReactRouter.push;
       }}>
-      {(
-         switch (route) {
-         | Home
-         | NotFound => ""
-         | Counter => "Counter"
-         | TemperatureConverter => "Temperature converter"
-         | GuessYourNumber => "Guess your number"
-         | GuessComputerNumber => "Guess the computer's number"
-         }
-       )
-       |> React.string}
+      {route |> Route.toTitle |> React.string}
     </a>;
 };
 
@@ -64,10 +75,17 @@ module Home = {
   [@react.component]
   let make = () => {
     <div>
-      <Title label="Melange Tutorial" />
       <ul>
-        {[|Counter, TemperatureConverter, GuessYourNumber, GuessComputerNumber|]
-         |> Array.map(route => <li key={Route.routeToPath(route)}> <Link route /> </li>)
+        {[|
+           Counter,
+           Playground,
+           CelsiusConverter1,
+           CelsiusConverter2,
+           TemperatureConverter,
+           GuessYourNumber,
+           GuessComputerNumber,
+         |]
+         |> Array.map(route => <li key={Route.toPath(route)}> <Link route /> </li>)
          |> React.array}
       </ul>
     </div>;
@@ -77,29 +95,29 @@ module Home = {
 [@react.component]
 let make = () => {
   let url = ReasonReactRouter.useUrl();
+  let route = Route.fromPath(url.path);
 
   <div>
-    {switch (Route.pathToRoute(url.path)) {
+    <Title label={Route.toTitle(route)} />
+    {switch (route) {
      | Home => <Home />
-     | Counter =>
-       <div>
-         <Title label="Counter" />
-         <Subtitle label="Counter using integer" />
-         <Counter />
-         <Subtitle label="Counter using float" />
-         <CounterFloat />
-       </div>
-     | TemperatureConverter =>
-       <div>
-         <Title label="Temperature converter" />
-         <Subtitle label="Celsius to Fahrenheit converter" />
-         <CelsiusConverter />
-         <Subtitle label="Bidirectional converter" />
-         <TemperatureConverter />
-       </div>
-     | GuessYourNumber => <div> <Title label="Guess your number" /> <GuessYourNumber /> </div>
-     | GuessComputerNumber => <div> <Title label="Guess the computer's number" /> <GuessComputerNumber /> </div>
-     | NotFound => <Title label="Not found!" />
+     | Counter => <Counter />
+     | Playground => <> <Subtitle label="Counter using float" /> <CounterFloat /> </>
+     | CelsiusConverter1 => <CelsiusConverter_Exception />
+     | CelsiusConverter2 =>
+       <>
+         <CelsiusConverter_Option />
+         <Subtitle label="Add prop with default value" />
+         <CelsiusConverter_PropDefaultValue value="25" />
+         <Subtitle label="Add optional prop" />
+         <CelsiusConverter_PropOptional value=26.0 />
+         <Subtitle label="Using Js.Float.fromString" />
+         <CelsiusConverter_FloatFromString value="28" />
+       </>
+     | TemperatureConverter => <TemperatureConverter />
+     | GuessYourNumber => <GuessYourNumber />
+     | GuessComputerNumber => <GuessComputerNumber />
+     | NotFound => <div />
      }}
   </div>;
 };
