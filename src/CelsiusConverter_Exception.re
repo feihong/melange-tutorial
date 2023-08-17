@@ -1,25 +1,25 @@
-let initFahrenheit = {js|? °F|js};
+let getValueFromEvent = (evt): string => ReactEvent.Form.target(evt)##value;
+
+let convert = celsius => 9.0 /. 5.0 *. celsius +. 32.0;
 
 [@react.component]
 let make = () => {
   let (celsius, setCelsius) = React.useState(() => "");
-  let (fahrenheit, setFahrenheit) = React.useState(() => initFahrenheit);
+  let (fahrenheit, setFahrenheit) = React.useState(() => "?");
 
   <div>
     <input
       value=celsius
       onChange={evt => {
-        let newValue = ReactEvent.Form.target(evt)##value |> String.trim;
-        setCelsius(_ => newValue);
-        switch (float_of_string(newValue)) {
-        | exception _ => setFahrenheit(_ => newValue == "" ? initFahrenheit : "error")
-        | celsius =>
-          let fahrenheit = 9.0 /. 5.0 *. celsius +. 32.0;
-          setFahrenheit(_ => string_of_float(fahrenheit) ++ {js| °F|js});
+        let newCelsius = getValueFromEvent(evt);
+        setCelsius(_ => newCelsius);
+        switch (newCelsius |> float_of_string |> convert |> Js.Float.toFixedWithPrecision(~digits=2)) {
+        | exception _ => setFahrenheit(_ => "error")
+        | newFahrenheit => setFahrenheit(_ => newFahrenheit)
         };
       }}
     />
     {React.string({js|°C = |js})}
-    <span> {React.string(fahrenheit)} </span>
+    {(fahrenheit == "error" ? fahrenheit : fahrenheit ++ {js| °F|js}) |> React.string}
   </div>;
 };
