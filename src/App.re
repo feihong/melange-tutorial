@@ -106,6 +106,7 @@ let make = () => {
      | CelsiusConverter1 => <CelsiusConverter_Exception />
      | CelsiusConverter2 =>
        <>
+         <CelsiusConverter_Test />
          <CelsiusConverter_Option />
          <Subtitle label="Add prop with default value" />
          <CelsiusConverter_PropDefaultValue value="25" />
