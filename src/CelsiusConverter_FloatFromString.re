@@ -1,29 +1,32 @@
-let initFahrenheit = {js|? °F|js};
+let getValueFromEvent = (evt): string => ReactEvent.Form.target(evt)##value;
 
-let getFahrenheit = value =>
-  switch (Js.Float.fromString(value)) {
-  | celsius when Js.Float.isNaN(celsius) => "error"
-  | _celsius when value == "" => {js|? °F|js}
-  | celsius =>
-    let fahrenheit = 9.0 /. 5.0 *. celsius +. 32.0;
-    string_of_float(fahrenheit) ++ {js| °F|js};
+let convert = celsius => 9.0 /. 5.0 *. celsius +. 32.0;
+
+let floatFromString = text =>
+  switch (Js.Float.fromString(text)) {
+  | value when Js.Float.isNaN(value) => None
+  | value => Some(value)
   };
 
 [@react.component]
-let make = (~value="") => {
-  let (celsius, setCelsius) = React.useState(() => value);
-  let (fahrenheit, setFahrenheit) = React.useState(() => getFahrenheit(value));
+let make = () => {
+  let (celsius, setCelsius) = React.useState(() => "");
 
   <div>
-    <input
-      value=celsius
-      onChange={evt => {
-        let newValue = ReactEvent.Form.target(evt)##value |> String.trim;
-        setCelsius(_ => newValue);
-        setFahrenheit(_ => getFahrenheit(newValue));
-      }}
-    />
+    <input value=celsius onChange={evt => setCelsius(_ => getValueFromEvent(evt))} />
     {React.string({js|°C = |js})}
-    <span> {React.string(fahrenheit)} </span>
+    {(
+       String.trim(celsius) == ""
+         ? {js|? °F|js}
+         : (
+           switch (celsius |> floatFromString |> Option.map(convert)) {
+           | None => "error"
+           | Some(fahrenheit) when fahrenheit < (-128.6) => {js|Unreasonably cold🥶|js}
+           | Some(fahrenheit) when fahrenheit > 212.0 => {js|Unreasonably hot🥵|js}
+           | Some(fahrenheit) => Js.Float.toFixedWithPrecision(fahrenheit, ~digits=2) ++ {js| °F|js}
+           }
+         )
+     )
+     |> React.string}
   </div>;
 };

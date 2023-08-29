@@ -103,17 +103,13 @@ let make = () => {
      | Home => <Home />
      | Counter => <Counter />
      | Playground => <> <Subtitle label="Counter using float" /> <CounterFloat /> </>
-     | CelsiusConverter1 => <CelsiusConverter_Exception />
+     | CelsiusConverter1 => <> <Subtitle label="Using exception" /> <CelsiusConverter_Exception /> </>
      | CelsiusConverter2 =>
        <>
-         <CelsiusConverter_Test />
+         <Subtitle label="Using option" />
          <CelsiusConverter_Option />
-         <Subtitle label="Add prop with default value" />
-         <CelsiusConverter_PropDefaultValue value="25" />
-         <Subtitle label="Add optional prop" />
-         <CelsiusConverter_PropOptional value=26.0 />
-         <Subtitle label="Using Js.Float.fromString" />
-         <CelsiusConverter_FloatFromString value="28" />
+         <Subtitle label="Using Js.Float.fromString instead of string_of_float_opt" />
+         <CelsiusConverter_FloatFromString />
        </>
      | TemperatureConverter => <TemperatureConverter />
      | GuessYourNumber => <GuessYourNumber />
