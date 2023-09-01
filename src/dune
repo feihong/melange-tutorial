@@ -1,8 +1,8 @@
 (melange.emit
  (target output)
  (alias react)
- (libraries reason-react)
+ (libraries reason-react styled-ppx.bs-css styled-ppx.bs-css-emotion)
  (modules :standard)
  (preprocess
-  (pps reactjs-jsx-ppx))
+  (pps reactjs-jsx-ppx styled-ppx.lib))
  (module_systems es6))

@@ -6,6 +6,7 @@ module Route = {
     | Playground
     | CelsiusConverter1
     | CelsiusConverter2
+    | StyledPpx
     | TemperatureConverter
     | GuessYourNumber
     | GuessComputerNumber;
@@ -17,6 +18,7 @@ module Route = {
     | ["playground"] => Playground
     | ["celsius-1"] => CelsiusConverter1
     | ["celsius-2"] => CelsiusConverter2
+    | ["styled-ppx"] => StyledPpx
     | ["temp-converter"] => TemperatureConverter
     | ["guess-your-number"] => GuessYourNumber
     | ["guess-computer-number"] => GuessComputerNumber
@@ -31,6 +33,7 @@ module Route = {
     | Playground => "playground"
     | CelsiusConverter1 => "celsius-1"
     | CelsiusConverter2 => "celsius-2"
+    | StyledPpx => "styled-ppx"
     | TemperatureConverter => "temp-converter"
     | GuessYourNumber => "guess-your-number"
     | GuessComputerNumber => "guess-computer-number";
@@ -43,6 +46,7 @@ module Route = {
     | Playground => "Playground"
     | CelsiusConverter1 => "Celsius Converter, pt 1"
     | CelsiusConverter2 => "Celsius Converter, pt 2"
+    | StyledPpx => "Introducing styled-ppx"
     | TemperatureConverter => "Temperature Converter"
     | GuessYourNumber => "Guess Your Number"
     | GuessComputerNumber => "Guess Computer's Number";
@@ -81,6 +85,7 @@ module Home = {
            Playground,
            CelsiusConverter1,
            CelsiusConverter2,
+           StyledPpx,
            TemperatureConverter,
            GuessYourNumber,
            GuessComputerNumber,
@@ -111,6 +116,7 @@ let make = () => {
          <Subtitle label="Using Js.Float.fromString instead of string_of_float_opt" />
          <CelsiusConverter_FloatFromString />
        </>
+     | StyledPpx => <> <Counter_Styled /> <CelsiusConverter_Styled /> </>
      | TemperatureConverter => <TemperatureConverter />
      | GuessYourNumber => <GuessYourNumber />
      | GuessComputerNumber => <GuessComputerNumber />
