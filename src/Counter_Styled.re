@@ -18,13 +18,11 @@ module Css = {
 
   let number = value => {
     let color =
-      `hex(
-        switch (value) {
-        | value when value < 0 => "f00"
-        | value when value > 0 => "060"
-        | _ => "00f"
-        },
-      );
+      switch (value) {
+      | value when value < 0 => CssJs.red
+      | value when value > 0 => CssJs.green
+      | _ => CssJs.blue
+      };
     [%cx {|
     text-align: center;
     font-size: 2em;
