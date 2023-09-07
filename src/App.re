@@ -50,7 +50,7 @@ module Route = {
     | CelsiusConverter1 => "Celsius Converter, pt 1"
     | CelsiusConverter2 => "Celsius Converter, pt 2"
     | StyledPpx => "styled-ppx"
-    | StackAndRow => "stack-and-row"
+    | StackAndRow => "Stack and Row"
     | TemperatureConverter => "Temperature Converter"
     | GuessYourNumber => "Guess Your Number"
     | GuessComputerNumber => "Guess Computer's Number";
@@ -122,7 +122,15 @@ let make = () => {
          <CelsiusConverter_FloatFromString />
        </>
      | StyledPpx => <> <Counter_Styled /> <CelsiusConverter_Styled /> </>
-     | StackAndRow => <> "tbd"->React.string </>
+     | StackAndRow =>
+       <>
+         <Subtitle label="Stack" />
+         <Stack gap=Md align=Left>
+           <Box label="Apple" />
+           <Box label="Banana Blueberry" />
+           <Box label="Chocolate" />
+         </Stack>
+       </>
      | TemperatureConverter => <TemperatureConverter />
      | GuessYourNumber => <GuessYourNumber />
      | GuessComputerNumber => <GuessComputerNumber />
