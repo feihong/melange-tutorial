@@ -6,6 +6,8 @@ module Route = {
     | Playground
     | CelsiusConverter1
     | CelsiusConverter2
+    | FoodOrder
+    | FoodOrderPolymorphic
     | StyledPpx
     | StackAndRow
     | TemperatureConverter
@@ -19,6 +21,8 @@ module Route = {
     | ["playground"] => Playground
     | ["celsius-1"] => CelsiusConverter1
     | ["celsius-2"] => CelsiusConverter2
+    | ["food-order"] => FoodOrder
+    | ["food-order-poly"] => FoodOrderPolymorphic
     | ["styled-ppx"] => StyledPpx
     | ["stack-and-row"] => StackAndRow
     | ["temp-converter"] => TemperatureConverter
@@ -35,6 +39,8 @@ module Route = {
     | Playground => "playground"
     | CelsiusConverter1 => "celsius-1"
     | CelsiusConverter2 => "celsius-2"
+    | FoodOrder => "food-order"
+    | FoodOrderPolymorphic => "food-order-poly"
     | StyledPpx => "styled-ppx"
     | StackAndRow => "stack-and-row"
     | TemperatureConverter => "temp-converter"
@@ -49,6 +55,8 @@ module Route = {
     | Playground => "Playground"
     | CelsiusConverter1 => "Celsius Converter, pt 1"
     | CelsiusConverter2 => "Celsius Converter, pt 2"
+    | FoodOrder => "Food Order"
+    | FoodOrderPolymorphic => "Food Order with Polymorphic Variant"
     | StyledPpx => "styled-ppx"
     | StackAndRow => "Stack and Row"
     | TemperatureConverter => "Temperature Converter"
@@ -59,11 +67,6 @@ module Route = {
 module Title = {
   [@react.component]
   let make = (~label) => <h1> {React.string(label)} </h1>;
-};
-
-module Subtitle = {
-  [@react.component]
-  let make = (~label) => <h2> {React.string(label)} </h2>;
 };
 
 module Link = {
@@ -89,6 +92,8 @@ module Home = {
            Playground,
            CelsiusConverter1,
            CelsiusConverter2,
+           FoodOrder,
+           FoodOrderPolymorphic,
            StyledPpx,
            StackAndRow,
            TemperatureConverter,
@@ -121,6 +126,8 @@ let make = () => {
          <Subtitle label="Using Js.Float.fromString instead of string_of_float_opt" />
          <CelsiusConverter_FloatFromString />
        </>
+     | FoodOrder => <FoodOrderDemo />
+     | FoodOrderPolymorphic => <FoodOrderPolymorphicDemo />
      | StyledPpx => <> <Counter_Styled /> <CelsiusConverter_Styled /> </>
      | StackAndRow =>
        <>
